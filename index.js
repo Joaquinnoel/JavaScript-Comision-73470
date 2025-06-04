@@ -39,7 +39,7 @@ while (seguirComprando) {
 mostrarResumen();
 }
 
-// 🔹 Función para mostrar el resumen de la compra
+
 function mostrarResumen() {
 if (carrito.length === 0) {
     alert("Tu carrito está vacío.");
