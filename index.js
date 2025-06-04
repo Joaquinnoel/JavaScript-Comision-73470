@@ -1,8 +1,8 @@
 
 const productos = [
-{ id: 1, nombre: " 9pm", precio: 20 },
-{ id: 2, nombre: "Khamrah", precio: 30 },
-{ id: 3, nombre: "Yara", precio: 50 }
+{ id: 1, nombre: " 9pm", precio: 67000 },
+{ id: 2, nombre: "Khamrah", precio: 70000 },
+{ id: 3, nombre: "Yara", precio: 75000 }
 ];
 
 
