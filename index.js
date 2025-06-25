@@ -1,65 +1,46 @@
 
 const productos = [
-{ id: 1, nombre: " 9pm", precio: 67000 },
-{ id: 2, nombre: "Khamrah", precio: 70000 },
-{ id: 3, nombre: "Yara", precio: 75000 }
+{ id: 1, nombre: " 9pm", precio: 67000 , categoria: " Dulce ", imagen: "./assets/9PM.jpeg"},
+{ id: 2, nombre: "Khamrah", precio: 70000 , categoria: "Dulce", imagen: " ./assets/2.jpeg"},
+{ id: 3, nombre: "Yara Moi", precio: 75000, categoria: "Frutal", imagen: "./assets/Yara Moi.jpeg" },
+{ id: 4, nombre: 'Hawas', precio: 89000, categoria: 'Citrico', imagen: './assets/hAWAS.jpeg' },
+{ id: 5, nombre: 'Yara Tous', precio: 10000, categoria: 'Dulce', imagen: './assets/Yara Tous.jpeg' },
+{ id: 6, nombre: 'Honor & Glory', precio: 79000, categoria: 'Citrico', imagen: './assets/Honor & Glory.jpeg' },
 ];
+
+const contenedor1 = document.querySelector("#contenedor");
+productos.forEach((producto)=> {
+    const div = document.createElement("div")
+    div.classList.add("cuadro");
+    div.innerHTML = `
+    <p> Nombre: ${producto.nombre}</p>
+    <p> Precio: ${producto.precio}</p>
+    <p> Categoria: ${producto.categoria}</p>
+    <img src="${producto.imagen}" alt="${producto.nombre}" width="100">
+    
+    `
+    const button = document.createElement("button")
+    button.innerText = 'Agregar Productos'
+
+    button.addEventListener('click', ()=>{
+        carrito.push(producto)
+        console.log(producto)
+    })
+    div.appendChild(button)
+    contenedor1.appendChild(div)
+})
+
+botonCarro.addEventListener('click', ()=>{
+    console.log(carrito)
+
+})
+
 
 
 let carrito = [];
 
 
-function iniciarCarrito() {
-alert(" Bienvenido al carrito de compras");
 
-let seguirComprando = true;
-
-while (seguirComprando) {
-    let mensaje = "¿Qué deseas comprar?\n";
-    for (let producto of productos) {
-    mensaje += `${producto.id}. ${producto.nombre} - $${producto.precio}\n`;
-    }
-    mensaje += "0. Finalizar compra";
-
-    let opcion = parseInt(prompt(mensaje));
-
-    if (opcion === 0) {
-    seguirComprando = false;
-    } else {
-    let seleccionado = productos.find(p => p.id === opcion);
-    if (seleccionado) {
-        carrito.push(seleccionado);
-        alert(` ${seleccionado.nombre} fue añadido al carrito.`);
-    } else {
-        alert(" Opción no válida. Intenta de nuevo.");
-    }
-    }
-}
-
-mostrarResumen();
-}
-
-
-function mostrarResumen() {
-if (carrito.length === 0) {
-    alert("Tu carrito está vacío.");
-    return;
-}
-
-let resumen = "Tu carrito contiene:\n";
-let total = 0;
-
-for (let item of carrito) { 
-    resumen += `- ${item.nombre} - $${item.precio}\n`;
-    total += item.precio;
-}
-
-resumen += `\n Total a pagar: $${total}`;
-alert(resumen);
-}
-
-
-iniciarCarrito();
 
 
 
