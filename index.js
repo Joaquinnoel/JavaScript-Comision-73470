@@ -23,17 +23,41 @@ productos.forEach((producto)=> {
     button.innerText = 'Agregar Productos'
 
     button.addEventListener('click', ()=>{
-        carrito.push(producto)
-        console.log(producto)
+        carrito.push({...producto})
+        console.log(carrito)
+        actualizarCarrito()
     })
     div.appendChild(button)
     contenedor1.appendChild(div)
 })
 
-botonCarro.addEventListener('click', ()=>{
-    console.log(carrito)
 
-})
+
+function actualizarCarrito() {
+    const total = carrito.reduce ((acc,producto) => acc + producto.precio, 0);
+    document.getElementById("total").innerText = `total: $${total}`;
+
+    
+
+    carrito.forEach((producto) => {
+        const li = document.createElement ("li");
+        li.innerText = producto.nombre
+        lista.appendChild(li);
+
+    });
+
+}
+
+
+
+const botonFinalizar = document.getElementById("botonCarro");
+
+botonFinalizar.addEventListener("click", () => {
+const compra = carrito.reduce((acc, producto) => acc + producto.precio, 0);
+document.getElementById("compra").innerText = `Gracias por tu compra. Gastaste: $${compra}`;
+});
+
+
 
 
 
