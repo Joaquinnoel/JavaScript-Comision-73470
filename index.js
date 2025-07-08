@@ -37,10 +37,11 @@ function actualizarCarrito() {
     const total = carrito.reduce ((acc,producto) => acc + producto.precio, 0);
     document.getElementById("total").innerText = `total: $${total}`;
 
-    
+    const lista = document.getElementById("carrito-lista");
+    lista.innerHTML = "";
 
     carrito.forEach((producto) => {
-        const li = document.createElement ("li");
+        const li = document.createElement("li");
         li.innerText = producto.nombre
         lista.appendChild(li);
 
@@ -54,14 +55,43 @@ const botonFinalizar = document.getElementById("botonCarro");
 
 botonFinalizar.addEventListener("click", () => {
 const compra = carrito.reduce((acc, producto) => acc + producto.precio, 0);
-document.getElementById("compra").innerText = `Gracias por tu compra. Gastaste: $${compra}`;
+const mensaje = document.getElementById('mensaje-compra');
+mensaje.innerHTML = `<strong>¡¡Gracias por tu compra!!</strong> <br> El total de tu compra es: $${compra}`;
+mensaje.classList.remove('oculto');
+mensaje.classList.add('visible');
+
+carrito.length = 0; 
+
+document.getElementById("total").innerText = "Total: $0";
+document.getElementById("lista").innerHTML = ""; 
+
+
+});
+
+setTimeout(() => {
+    mensaje.classList.add('fade-out');
+    setTimeout(() => {
+        mensaje.classList.add('oculto');
+        mensaje.classList.remove('visible', 'fade-out');
+    }, 500);
+    
+}, 3000);
+
+document.getElementById("botonVaciar").addEventListener("click", () => {
+    carrito.length = 0; 
+    actualizarCarrito();
+    document.getElementById("lista").innerHTML = "";
 });
 
 
 
 
-
 let carrito = [];
+
+
+
+
+
 
 
 

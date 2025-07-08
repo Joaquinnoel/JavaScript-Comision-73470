@@ -62,7 +62,7 @@ cursor: pointer;
 }
 
 
-#carrito-lista {
+#carrito {
     background-color: #fbeedc;
     padding: 20px;
     margin: 0 auto;
@@ -75,20 +75,52 @@ cursor: pointer;
 
 }
 
-#carrito-lista ul{
+#carrito ul{
     list-style: none ;
     padding:  0;
     margin: 10px 0;
 
 }
 
-#carrito-lista li{
+#carrito li{
     padding:  5px 0;
 }
 
-#compra{
-    font-weight: bold;
+#mensaje-compra {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-width: 400px;
     font-size: 18px;
-    color: #27ae60;
-    margin-top: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease;
+    opacity: 1;
+    text-align: center;
+}
+
+
+.oculto {
+    display: none;
+}
+.visible {
+    display: block;
+}
+
+
+#botonVaciar{
+
+background-color: #cc4c4c;
+color: #ffffff;
+border: none;
+border-radius: 5px;
+margin-top: 10px;
+padding:  10px 15px;
+cursor: pointer;
+}
+
+#botonVaciar:hover{
+    background-color: #a03a3a;
 }
