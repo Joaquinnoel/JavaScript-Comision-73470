@@ -55,17 +55,44 @@ const botonFinalizar = document.getElementById("botonCarro");
 
 botonFinalizar.addEventListener("click", () => {
 const compra = carrito.reduce((acc, producto) => acc + producto.precio, 0);
+if (carrito.length === 0) {
+    Swal.fire({
+    icon: 'warning',
+    title: 'Carrito vacío',
+    text: 'Agregá algún producto antes de finalizar la compra',
+    });
+    return;
+}
+
 Swal.fire({
-    title: '¡Gracias por tu compra! 🎉',
-    text: `Gastaste $${compra}`,
-    icon: 'success',
-    confirmButtonText: 'Aceptar',
-    confirmButtonColor: '#28a745'
-});
+    title: 'Confirmá tu compra',
+    text: `Total a pagar: $${compra}`,
+    input: 'text',
+    inputPlaceholder: 'Ingrese Su Nombre Para Validar El Pago',
+    showCancelButton: true,
+    confirmButtonText: 'Finalizar',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#28a745',
+    preConfirm: (nombre) => {
+    if (!nombre) {
+        Swal.showValidationMessage('Ingrese Su Nombre Para Validar El Pago');
+    }
+    return nombre;
+    }
+}).then((result) => {
+    if (result.isConfirmed) {
+        Swal.fire({
+            icon: 'success',
+            title: `¡Gracias, ${result.value}!`,
+            text: `Tu compra de $${compra} fue realizada con éxito.`,
+            confirmButtonColor: '#28a745'
+        });
 
+    carrito.length = 0;
+    actualizarCarrito();
+    }
+  });
 
-carrito.length = 0; 
-actualizarCarrito();
 
 document.getElementById("total").innerText = "Total: $0";
 document.getElementById("lista").innerHTML = ""; 
