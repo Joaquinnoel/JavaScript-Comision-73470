@@ -55,12 +55,17 @@ const botonFinalizar = document.getElementById("botonCarro");
 
 botonFinalizar.addEventListener("click", () => {
 const compra = carrito.reduce((acc, producto) => acc + producto.precio, 0);
-const mensaje = document.getElementById('mensaje-compra');
-mensaje.innerHTML = `<strong>¡¡Gracias por tu compra!!</strong> <br> El total de tu compra es: $${compra}`;
-mensaje.classList.remove('oculto');
-mensaje.classList.add('visible');
+Swal.fire({
+    title: '¡Gracias por tu compra! 🎉',
+    text: `Gastaste $${compra}`,
+    icon: 'success',
+    confirmButtonText: 'Aceptar',
+    confirmButtonColor: '#28a745'
+});
+
 
 carrito.length = 0; 
+actualizarCarrito();
 
 document.getElementById("total").innerText = "Total: $0";
 document.getElementById("lista").innerHTML = ""; 
@@ -68,14 +73,7 @@ document.getElementById("lista").innerHTML = "";
 
 });
 
-setTimeout(() => {
-    mensaje.classList.add('fade-out');
-    setTimeout(() => {
-        mensaje.classList.add('oculto');
-        mensaje.classList.remove('visible', 'fade-out');
-    }, 500);
-    
-}, 3000);
+
 
 document.getElementById("botonVaciar").addEventListener("click", () => {
     carrito.length = 0; 
