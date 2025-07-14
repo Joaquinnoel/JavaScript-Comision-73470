@@ -70,7 +70,12 @@ if (carrito.length === 0) {
     });
     return;
 }
-
+const codigosDescuento = {
+    "NOEL20": 20,
+    "PRIMERACOMPRA": 15,
+    "MEGADESCUENTO":50,
+    "CLIENTEVIP": 30
+};
 Swal.fire({
     title: 'Datos de la tarjeta 💳',
     html: `
@@ -78,6 +83,7 @@ Swal.fire({
     <input id="numero-tarjeta" class="swal2-input" placeholder="Número de tarjeta (16 dígitos)">
     <input id="vencimiento" class="swal2-input" placeholder="MM/AA">
     <input id="cvv" class="swal2-input" placeholder="CVV">
+    <input id="descuento" class="swal2-input" placeholder="Código de descuento (opcional)">
     `,
     confirmButtonText: 'Pagar $' + compra,
     focusConfirm: false,
@@ -86,6 +92,7 @@ Swal.fire({
     const numero = document.getElementById('numero-tarjeta').value;
     const vencimiento = document.getElementById('vencimiento').value;
     const cvv = document.getElementById('cvv').value;
+    const codigo = document.getElementById('descuento').value.trim().toUpperCase();
 
     if (!nombre || !numero || !vencimiento || !cvv) {
         Swal.showValidationMessage('Todos los campos son obligatorios');
@@ -99,16 +106,32 @@ Swal.fire({
         Swal.showValidationMessage('CVV inválido');
     }
 
-    return { nombreTarjeta: nombre, numero };
+    return { nombreTarjeta: nombre, codigo };
     }
 }).then((result) => {
     if (result.isConfirmed) {
+        const codigoIngresado = result.value.codigo;
+        const porcentajeDescuento = codigosDescuento[codigoIngresado] || 0;
+        const descuentoAplicado = compra * (porcentajeDescuento / 100);
+        const totalConDescuento = compra - descuentoAplicado;
+    
+    
     
     Swal.fire({
     icon: 'success',
     title: `¡Gracias, ${result.value.nombreTarjeta}!`,
-    text: `Tu compra de $${compra} fue aprobada.`,
-    confirmButtonColor: '#28a745'
+    html:`
+    <p>Tu compra fue Aprobada.</p>
+    ${porcentajeDescuento > 0
+        ?  `<p>Codigo <strong>${codigoIngresado}</strong> aplicado: ${porcentajeDescuento}% OFF</p>
+            <p><strong>Total Final: $${totalConDescuento.toFixed(2)}</strong></p>`
+        :  `<p>Total: $${compra}</p>`}
+    `,
+    confirmButtonColor: '#28a745'    
+
+
+    
+    
 });
 
     
@@ -129,18 +152,85 @@ document.getElementById("lista").innerHTML = "";
 
 
 document.getElementById("botonVaciar").addEventListener("click", () => {
-    carrito.length = 0; 
-    actualizarCarrito();
-    document.getElementById("lista").innerHTML = "";
+    swal.fire({
+    title: "¿Estas seguro de Vaciar el carrito?",
+    icon:"warning",
+    showCancelButton:true,
+    confirmButtonText: "Si, Vaciar"
+
+    }).then(result => {
+        if (result.isConfirmed){
+            carrito.length = 0; 
+            actualizarCarrito();
+
+            document.getElementById("lista").innerHTML = "";
+        }
+    })
+    
 });
 
 
 
 
+
+
+
+
+document.getElementById("ver-descuentos").addEventListener("click", () =>{
+Toastify({
+    text: "¡Descuento Exlusivo para vos aprovechalo!",
+    duration:3000,
+    gravity: "bottom",
+    position: "right",
+    style: {
+        background: "linear-gradient(to right, #ff416c, #ff4b2b)",
+        color: "#fff",
+        fontWeight: "bold",
+    }
+    
+}).showToast();
+
+setTimeout(()=>{
+    window.location.href = "descuentos.html";
+
+},1500);
+
+});
+
 let carrito = [];
 
+function copiarCodigo(codigo) {
+    const inputTemp = document.createElement("input");
+    inputTemp.value = codigo;
+    document.body.appendChild(inputTemp);
+    inputTemp.select();
+    document.execCommand("copy");
+    document.body.removeChild(inputTemp);
+
+    Swal.fire({
+        toast:true,
+        position:'top-end',
+        icon:'success',
+        title:`Código Copiado: ${codigo}`,
+        showConfirmButton: false,
+        timer:2000,
+        timerProgressBar: true
+
+    });
+
+    setTimeout(()=> {
+        window.location.href = "index.html"
+    }, 1000);
+}
 
 
+
+localStorage.setItem('carrito',JSON.stringify(carrito));
+if (localStorage.getItem(`descuento_usado_${codigoIngresado}`)) {
+    porcentajeDescuento = 0;
+} else {
+    localStorage.setItem(`descuento_usado_${codigoIngresado}`,"true");
+}
 
 
 
