@@ -1,7 +1,7 @@
 
 body{
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #fef9f5;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fdfdfd;
     margin: 0px;
     padding: 0px;
 }
@@ -33,12 +33,15 @@ body{
 }
 
 .cuadro{
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
     padding: 15px;
+    transition: transform 0.3s ease;
     text-align: center;
 
+}
+.cuadro:hover{
+    transform: scale(1.02);
 }
 
 .cuadro p{
@@ -48,27 +51,44 @@ body{
 
 #botonCarro{
 
-background-color: #cc4c4c;
-color: #ffffff;
-border: none;
-border-radius: 5px;
-margin-top: 10px;
-padding:  10px 15px;
+background-color: #28a745; 
+color: white;
+padding: 10px 20px;
+border-radius: 8px;
+font-weight: bold;
+transition: 0.3s;
 cursor: pointer;
 }
 
+
+
 #botonCarro:hover{
-    background-color: #a03a3a;
+    
+    opacity: 0.85;
 }
 
-
+.carrito-Producto{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+.carrito-Producto:hover{
+    background-color: #0056b3;
+    cursor: pointer;
+}
 #carrito {
-    background-color: #fbeedc;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 700px;
-    border-top: 2px solid #e67e22;
     text-align: center;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
 
 
 
@@ -89,17 +109,19 @@ cursor: pointer;
 
 #botonVaciar{
 
-background-color: #cc4c4c;
-color: #ffffff;
-border: none;
-border-radius: 5px;
-margin-top: 10px;
-padding:  10px 15px;
+background-color: #dc3545; 
+color: white;
+padding: 10px 20px;
+border-radius: 8px;
+font-weight: bold;
+margin-left: 15px;
+transition: 0.3s;
 cursor: pointer;
 }
 
 #botonVaciar:hover{
     background-color: #a03a3a;
+    opacity: 0.85;
 }
 
 

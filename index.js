@@ -15,6 +15,8 @@ const productos = [
 
 ];
 
+let carrito = [];
+
 const contenedor1 = document.querySelector("#contenedor");
 productos.forEach((producto)=> {
     const div = document.createElement("div")
@@ -28,6 +30,7 @@ productos.forEach((producto)=> {
     `
     const button = document.createElement("button")
     button.innerText = 'Agregar Productos'
+    button.classList.add('carrito-Producto')
 
     button.addEventListener('click', ()=>{
         carrito.push({...producto})
@@ -53,6 +56,7 @@ function actualizarCarrito() {
         lista.appendChild(li);
 
     });
+    localStorage.setItem("carrito", JSON.stringify(carrito));
 
 }
 
@@ -87,6 +91,31 @@ Swal.fire({
     `,
     confirmButtonText: 'Pagar $' + compra,
     focusConfirm: false,
+    didOpen: () => {
+        const vencimientoInput = document.getElementById("vencimiento");
+        const numeroTarjetaInput = document.getElementById("numero-tarjeta");
+
+
+        vencimientoInput.addEventListener("input", () => {
+            let value = vencimientoInput.value.replace(/\D/g, ''); 
+            if (value.length >= 3) {
+                vencimientoInput.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            } else {
+                vencimientoInput.value = value;
+            }
+        });
+
+        numeroTarjetaInput.addEventListener("input", () => {
+            let value = numeroTarjetaInput.value.replace(/\D/g, '');
+            value = value.slice(0, 16);
+            let formateado = '';
+            for (let i = 0; i < value.length; i += 4) {
+                if (i > 0) formateado += '-';
+                formateado += value.substring(i, i + 4);
+            }
+            numeroTarjetaInput.value = formateado;
+        });
+    },
     preConfirm: () => {
     const nombre = document.getElementById('nombre-tarjeta').value;
     const numero = document.getElementById('numero-tarjeta').value;
@@ -98,9 +127,15 @@ Swal.fire({
         Swal.showValidationMessage('Todos los campos son obligatorios');
     }
 
-    if (numero.length !== 16 || isNaN(numero)) {
-        Swal.showValidationMessage('Número de tarjeta inválido');
+    const numeroLimpio = numero.replace(/\D/g, '');
+    if(numeroLimpio.length !== 16 || isNaN(numeroLimpio)){
+        swal.showValidationMessage('Número de tarjeta invalidó')
     }
+
+    if (!/^\d{2}\/\d{2}$/.test(vencimiento)) {
+    Swal.showValidationMessage('Formato de vencimiento inválido (MM/AA)');
+}
+
 
     if (cvv.length !== 3 || isNaN(cvv)) {
         Swal.showValidationMessage('CVV inválido');
@@ -143,8 +178,7 @@ Swal.fire({
 
 
 
-document.getElementById("total").innerText = "Total: $0";
-document.getElementById("lista").innerHTML = ""; 
+
 
 
 });
@@ -197,7 +231,7 @@ setTimeout(()=>{
 
 });
 
-let carrito = [];
+
 
 function copiarCodigo(codigo) {
     const inputTemp = document.createElement("input");
@@ -224,13 +258,14 @@ function copiarCodigo(codigo) {
 }
 
 
+window.addEventListener("DOMContentLoaded", () => {
+    const guardado = localStorage.getItem("carrito");
+    if (guardado) {
+        carrito = JSON.parse(guardado);
+        actualizarCarrito();
+    }
+});
 
-localStorage.setItem('carrito',JSON.stringify(carrito));
-if (localStorage.getItem(`descuento_usado_${codigoIngresado}`)) {
-    porcentajeDescuento = 0;
-} else {
-    localStorage.setItem(`descuento_usado_${codigoIngresado}`,"true");
-}
 
 
 
