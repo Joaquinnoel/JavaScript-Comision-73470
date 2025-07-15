@@ -18,28 +18,45 @@ const productos = [
 let carrito = [];
 
 const contenedor1 = document.querySelector("#contenedor");
-productos.forEach((producto)=> {
-    const div = document.createElement("div")
+productos.forEach((producto) => {
+    const div = document.createElement("div");
     div.classList.add("cuadro");
     div.innerHTML = `
-    <p> Nombre: ${producto.nombre}</p>
-    <p> Precio: ${producto.precio}</p>
-    <p> Categoria: ${producto.categoria}</p>
-    <img src="${producto.imagen}" alt="${producto.nombre}" width="100">
-    
-    `
-    const button = document.createElement("button")
-    button.innerText = 'Agregar Productos'
-    button.classList.add('carrito-Producto')
+        <p> Nombre: ${producto.nombre}</p>
+        <p> Precio: $${producto.precio.toLocaleString()}</p>
+        <p> Categoria: ${producto.categoria}</p>
+        <img src="${producto.imagen}" alt="${producto.nombre}" width="100">
+    `;
 
-    button.addEventListener('click', ()=>{
-        carrito.push({...producto})
-        console.log(carrito)
-        actualizarCarrito()
-    })
-    div.appendChild(button)
-    contenedor1.appendChild(div)
-})
+    const buttonAgregar = document.createElement("button");
+    buttonAgregar.innerText = 'Agregar Producto';
+    buttonAgregar.classList.add('carrito-Producto');
+    buttonAgregar.addEventListener('click', () => {
+        carrito.push({ ...producto });
+        actualizarCarrito();
+    });
+
+    
+    const buttonEliminar = document.createElement("button");
+    buttonEliminar.innerText =' Eliminar Producto';
+    buttonEliminar.classList.add('eliminar-btn');
+    buttonEliminar.addEventListener('click', () => {
+        const index = carrito.findIndex((p) => p.id === producto.id);
+        if (index !== -1) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+    });
+
+    
+    const botonesContainer = document.createElement("div");
+    botonesContainer.classList.add("botones-producto");
+    botonesContainer.appendChild(buttonAgregar);
+    botonesContainer.appendChild(buttonEliminar);
+
+    div.appendChild(botonesContainer);
+    contenedor1.appendChild(div);
+});
 
 
 
@@ -56,6 +73,8 @@ function actualizarCarrito() {
         lista.appendChild(li);
 
     });
+
+    
     localStorage.setItem("carrito", JSON.stringify(carrito));
 
 }
