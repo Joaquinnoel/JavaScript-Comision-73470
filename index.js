@@ -1,14 +1,22 @@
+
+
+const productos = [
+{ "id": 1, nombre: " 9pm", precio: 67000 , categoria: " Dulce ", imagen: "./assets/9PM.jpeg"},
+{ "id": 2, nombre: "Khamrah", precio: 70000 , categoria: "Dulce", imagen: " ./assets/2.jpeg"},
+{ "id": 3, nombre: "Yara Moi", precio: 75000, categoria: "Frutal", imagen: "./assets/Yara Moi.jpeg" },
+{ "id": 4, nombre: "Hawas", precio: 89000, categoria: "Citrico", imagen: "./assets/hAWAS.jpeg" },
+{ "id": 5, nombre: "Yara Tous", precio: 76000, categoria: "Dulce", imagen: "./assets/Yara Tous.jpeg" },
+{ "id": 6, nombre: "Honor & Glory", precio: 79000, categoria: "Citrico", imagen: "./assets/Honor & Glory.jpeg" },
+{ "id": 7, nombre: "Yara Candy", precio: 80000, categoria: "Dulce", imagen: "./assets/Yara Candy.jpg" },
+{ "id": 8, nombre: "Amerat", precio: 65000, categoria: "Tropical", imagen: "./assets/Amerat.jpeg"},
+{ "id": 9, nombre: "Asad Bourbon", precio: 65000, categoria: "Cafeinado", imagen: "./assets/5.jpeg"},
+{ "id": 10, nombre: "Bharara King", precio: 110000, categoria: "Dulce", imagen: "./assets/4.jpeg"},
+{ "id": 11, nombre: "Asad Masculino", precio: 60000, categoria: "Amargo", imagen: "./assets/2.2.jpeg"},
+{ "id": 12, nombre: "Club De Nuit Intense", precio: 120000, categoria: "Dulce", imagen: "./assets/1.jpeg"}
+]
+
 let carrito = [];
 
-fetch('productos.json')
-.then(res => res.json())
-.then(data => {
-    productos = data;
-    renderProductos(); // función que dibuja los productos
-});
-
-
-function renderProductos (){
 const contenedor1 = document.querySelector("#contenedor");
 productos.forEach((producto) => {
     const div = document.createElement("div");
@@ -49,7 +57,7 @@ productos.forEach((producto) => {
     div.appendChild(botonesContainer);
     contenedor1.appendChild(div);
 });
-}
+
 
 
 function actualizarCarrito() {
